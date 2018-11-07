@@ -20,7 +20,7 @@ const templates = {
   loginForm: document.querySelector("#login-form").content,
   productList: document.querySelector("#product-list").content,
   productItem: document.querySelector("#product-item").content,
-  productDetail: document.querySelector('#product-detail')
+  productDetail: document.querySelector('#product-detail').content
 };
 
 const rootEl = document.querySelector(".root");
@@ -104,6 +104,9 @@ async function drawProductList() {
   // 3. 필요한 데이터 불러오기
   const res = await api.get("/products");
   const productList = res.data;
+
+  // 상품 세부 내용을 보여주기 위한 데이터 불러오기
+
   // 4. 내용 채우기
   for (const product of productList) {
     const frag = document.importNode(templates.productItem, true);
@@ -116,6 +119,9 @@ async function drawProductList() {
     mainImgEl.textContent = product.mainImgUrl;
 
     // 게시물(이미지) 클릭 시 세부 목록으로
+    mainImgEl.addEventListener('click', e => {
+      drawProductDetail(product.id)
+    })
 
     productListEl.appendChild(frag);
   }
@@ -127,12 +133,35 @@ async function drawProductList() {
   rootEl.appendChild(frag);
 }
 // 상품 상세 정보 그리기
-async function drawProductDetail() {
+async function drawProductDetail(productId) {
   // 1.
+  // data
+  // const res = await api.get(`/products/${productId}`)
   const frag = document.importNode(templates.productDetail, true)
   // 2.
+  const titleEl = frag.querySelector('.title')
+  const detailImgEl = frag.querySelector('.detail-img')
+  detailImgEl.setAttribute('src', detailImgUrls)
+  const categoryEl = frag.querySelector('.category')
+  const descriptionEl = frag.querySelector('.description')
+  const backEl = frag.querySelector('.back')
 
+  // 3.
+  const {data: {title, category, description, detailImgUrls}} = await api.get('/products/' + productId)
 
+  // 4.
+  detailImgEl.textContent = detailImgUrls
+  titleEl.textContent = title
+  categoryEl.textContent = category
+  descriptionEl.textContent = description
+
+  // 5.
+  backEl.addEventListener('click', e => {
+    mainPage()
+  })
+  // 6.
+  rootEl.textContent = ''
+  rootEl.appendChild(frag)
 }
 
 // 로그인 화면 그리기
