@@ -36,11 +36,24 @@ const rootEl = document.querySelector('.root')
 // 시작 화면 페이지
 async function mainPage() {
   // 멤버 네비
+  memberNav()
   drawProductList()
 }
 
-// 멤버 버튼 모은 페이지
-// const memberEl = document.querySelector('.member')
+// 멤버 버튼 모은 페이지: memberEl 은 헤더 영역의 nav tag를 선택하기 위한
+const memberEl = document.querySelector('.member')
+
+async function memberNav() {
+  const frag = document.importNode(templates.member, true)
+
+  frag.querySelector('.member-login').addEventListener('click', e => {
+    drawLoginForm()
+  })
+
+
+  memberEl.textContent =''
+  memberEl.appendChild(frag)
+}
 
 // 로그인 화면 그리는 함수
 async function drawLoginForm() {
@@ -50,8 +63,6 @@ async function drawLoginForm() {
   // 2. 요소 선택
   const formEl = frag.querySelector(".login-form");
 
-  // 3. 필요한 데이터 불러오기 - 필요없음
-  // 4. 내용 채우기 - 필요없음
   // 5. 이벤트 리스너 등록하기
   formEl.addEventListener("submit", async e => {
     e.preventDefault();
@@ -64,7 +75,7 @@ async function drawLoginForm() {
     });
 
     localStorage.setItem("token", res.data.token);
-    drawProductList();
+    mainPage()
   });
 
   // 6. 템플릿을 문서에 삽입
@@ -90,12 +101,12 @@ async function drawProductList() {
     const frag = document.importNode(templates.productItem, true)
 
     const titleEl = frag.querySelector('.product-item-title')
-    // const mainImgEl = frag.querySelector('.product-item-img')
-    // mainImgEl.setAttribute('src', productItem.mainImgUrl)
+    const mainImgEl = frag.querySelector('.product-item-img')
+    mainImgEl.setAttribute('src', product.mainImgUrl)
 
 
     titleEl.textContent = product.title
-    // mainImgEl.textContent = productItem.mainImgUrl
+    mainImgEl.textContent = product.mainImgUrl
 
     // 게시물(이미지) 클릭 시 세부 목록으로
 

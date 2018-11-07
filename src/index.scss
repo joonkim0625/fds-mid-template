@@ -3,3 +3,21 @@ $main-color: skyblue;
 body {
   background-color: $main-color;
 }
+
+
+img {
+  widht: 250px;
+  height: 250px;
+}
+
+.member-btns {
+  .member-logout {
+    display: none;
+  }
+}
+
+.logged-in {
+  .member-logout {
+    display: block;
+  }
+}
