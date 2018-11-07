@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,10 +8,72 @@
   <title>쇼핑몰!</title>
   <link rel="stylesheet" href="./index.scss">
 </head>
+
 <body>
+
+  <!-- 헤더 -->
+  <header class="header">
+    <div class="container">
+      <h1><a href="#">쇼핑몰</a></h1>
+      <nav class="member"></nav>
+    </div>
+
+  </header>
+
+
   <!-- 템플릿을 이곳에 작성해주세요 -->
+  <!-- 멤버 네비게이션 -->
+  <template id="member">
+    <div class="member-btns">
+      <button class="member-login">로그인</button>
+      <button class="member-register">회원가입</button>
+      <button class="member-cart">장바구니</button>
+    </div>
+  </template>
+
+  <!-- login 화면 폼 -->
+  <template id="login-form">
+    <form class="login-form">
+      <input type="text" name="username">
+      <input type="password" name="password">
+      <button>로그인</button>
+    </form>
+  </template>
+
+  <!-- 회원가입 화면 -->
+  <template id="register-form">
+    <form class="register-form">
+      <input type="text" name="username">
+      <input type="password" name="password">
+      <button>회원가입</button>
+    </form>
+  </template>
+
+  <!-- 상품 목록 화면 -->
+  <template id="product-list">
+    <h1>상품 목록</h1>
+    <div class="product-list"></div>
+
+  </template>
+
+  <!-- 상품 목록 들 -->
+  <template id="product-item">
+    <div class="product-item">
+      <img src="#" alt="" class="product-item-img">
+      <p class="product-item-title"></p>
+    </div>
+  </template>
+
+  <!-- 상품의 상세 내용 -->
+  <!-- 장바구니 화면 -->
+
+  <div class="root"></div>
+  <!-- 푸터 -->
+  <footer class="footer">푸터</footer>
+
 
   <div class="root"></div>
   <script src="./index.js"></script>
 </body>
+
 </html>
