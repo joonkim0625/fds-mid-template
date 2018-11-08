@@ -150,6 +150,9 @@ async function drawProductDetail(productId) {
   const cartFormEl = frag.querySelector('.cart-form')
   const selectEl = frag.querySelector('.option')
   const totalPriceEl = frag.querySelector('.total-price')
+  const itemQuantityEl = frag.querySelector('.quantity')
+
+
 
 
   // 3.
@@ -181,17 +184,46 @@ async function drawProductDetail(productId) {
 
     // 불러온 걸 template.productDetail 안에 추가...
     const optionEl = document.createElement('option')
-    optionEl.setAttribute('value', 'optionList.id')
+    optionEl.setAttribute('value', optionList.id)
+    optionEl.setAttribute('class', 'size')
     optionEl.textContent = optionList.title
     selectEl.appendChild(optionEl)
 
-   totalPriceEl.textContent = optionList.price
+    totalPriceEl.textContent = optionList.price
 
   }
   // 5.
   backEl.addEventListener('click', e => {
     mainPage()
   })
+
+  // 수량의 변화에 따른 값의 변화를 위한 이벤트리스너
+  selectEl.addEventListener('change', e => {
+    // find method를 활용해보자.
+    console.log(options)
+    console.log(selectEl)
+    console.log(options[0])
+    console.log(options[0].id)
+    console.log(options[0].price);
+    const sizeEl = document.querySelector(".size");
+    const optionValue = sizeEl.getAttribute("value")
+    console.log(optionValue, 'hello')
+
+    for (const optionList of options) {
+      console.log(e.target.value)
+      console.log(optionList.price)
+      console.log(parseInt(optionList.id))
+      if (parseInt(e.target.value) === optionList.id) {
+
+        totalPriceEl.textContent = optionList.price;
+      }
+
+    }
+
+
+
+  })
+
 
   // formEl.addEventListener('submit', async e => {
   //   e.preventDefault()
