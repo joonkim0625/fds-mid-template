@@ -21,7 +21,9 @@ const templates = {
   productList: document.querySelector("#product-list").content,
   productItem: document.querySelector("#product-item").content,
   productDetail: document.querySelector('#product-detail').content,
-  productDetailImg: document.querySelector('#detail-img').content
+  productDetailImg: document.querySelector('#detail-img').content,
+  cartItem: document.querySelector('#cart-item').content
+
 };
 
 const rootEl = document.querySelector(".root");
@@ -145,9 +147,18 @@ async function drawProductDetail(productId) {
   const categoryEl = frag.querySelector('.category')
   const descriptionEl = frag.querySelector('.description')
   const backEl = frag.querySelector('.back')
+  const cartFormEl = frag.querySelector('.cart-form')
+  const selectEl = frag.querySelector('.option')
+  const totalPriceEl = frag.querySelector('.total-price')
+
 
   // 3.
-  const {data: {title, category, description, mainImgUrl, detailImgUrls}} = await api.get('/products/' + productId)
+  const {data: {title, category, description, mainImgUrl, detailImgUrls, options}} = await api.get('/products/' + productId, {
+    params: {
+      _embed: 'options'
+    }
+  })
+
 
   // 4.
 
@@ -155,6 +166,7 @@ async function drawProductDetail(productId) {
   titleEl.textContent = title
   categoryEl.textContent = category
   descriptionEl.textContent = description
+
   // 세부이미지 표시를 위한 for문
   for (const url of detailImgUrls) {
     const frag = document.importNode(templates.productDetailImg, true)
@@ -163,12 +175,31 @@ async function drawProductDetail(productId) {
 
     detailImgEl.setAttribute('src', url)
     detailImgListEl.appendChild(frag)
+  }
+  // options 안의 내용들을 불러오기 위한 for문
+  for (const optionList of options) {
+
+    // 불러온 걸 template.productDetail 안에 추가...
+    const optionEl = document.createElement('option')
+    optionEl.setAttribute('value', 'optionList.id')
+    optionEl.textContent = optionList.title
+    selectEl.appendChild(optionEl)
+
+   totalPriceEl.textContent = optionList.price
 
   }
   // 5.
   backEl.addEventListener('click', e => {
     mainPage()
   })
+
+  // formEl.addEventListener('submit', async e => {
+  //   e.preventDefault()
+  //   // const optionId = e.target.elements.option.value
+  //   // const quantity = e.target.elements.quantity.value
+
+  //   // api.post('/cartItems', {optionId...}) -> parseInt 변환 후 전송
+  // })
   // 6.
   rootEl.textContent = ''
   rootEl.appendChild(frag)

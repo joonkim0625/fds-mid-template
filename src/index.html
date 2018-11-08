@@ -80,7 +80,24 @@
         <p class="description"></p>
 
       </div>
-      <form class="cart-form"></form>
+      <!-- 장바구니에 상품을 추가시키기 위한 영역 -->
+      <form class="cart-form">
+        <!-- 수량 관련 -->
+        <label>사이즈
+          <select name="option" class="option" required>
+            <option value="" disabled selected>옵션을 선택하세요</option>
+
+          </select>
+        </label>
+        <label>
+          수량
+          <input type="number" name="quantitiy" class="quantitiy" value="1" min="1" required>
+        </label>
+        <button>담기</button>
+      </form>
+      <div class="total-price-container">
+        가격: <span class="total-price"></span>
+      </div>
       <div class="detail-img-list"></div>
     </div>
   </template>
@@ -89,7 +106,23 @@
   <template id="detail-img">
     <img class="detail-img">
   </template>
+
   <!-- 장바구니 화면 -->
+  <template id="cart-list">
+    <h1>장바구니</h1>
+    <div class="cart-list"></div>
+  </template>
+  <!-- 장바구니 화면 내 상품 목록 -->
+  <template id="cart-item">
+    <div class="cart-item">
+      <img alt="" class="main-img">
+      <div class="title"></div>
+      <div class="description"></div>
+      <div class="option"></div>
+      <div class="quantity"></div>
+      <div class="price"></div>
+    </div>
+  </template>
 
   <div class="root"></div>
   <!-- 푸터 -->
