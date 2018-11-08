@@ -70,15 +70,24 @@
 
   <!-- 상품의 상세 내용 -->
   <template id="product-detail">
-    <h2>상세페이지</h2>
-    <button class="back">목록으로</button>
-    <div class="product-detail-page">
-      <img alt="" class="detail-img">
-      <h3 class="title"></h3>
-      <p class="category"></p>
-      <p class="description"></p>
+    <div class="product-detail">
+      <h2>상세페이지</h2>
+      <button class="back">목록으로</button>
+      <div class="product-info">
+        <img alt="" class="main-img">
+        <h3 class="title"></h3>
+        <p class="category"></p>
+        <p class="description"></p>
 
+      </div>
+      <form class="cart-form"></form>
+      <div class="detail-img-list"></div>
     </div>
+  </template>
+
+  <!-- detail-img template -->
+  <template id="detail-img">
+    <img class="detail-img">
   </template>
   <!-- 장바구니 화면 -->
 

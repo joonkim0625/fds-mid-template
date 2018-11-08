@@ -20,7 +20,8 @@ const templates = {
   loginForm: document.querySelector("#login-form").content,
   productList: document.querySelector("#product-list").content,
   productItem: document.querySelector("#product-item").content,
-  productDetail: document.querySelector('#product-detail').content
+  productDetail: document.querySelector('#product-detail').content,
+  productDetailImg: document.querySelector('#detail-img').content
 };
 
 const rootEl = document.querySelector(".root");
@@ -116,7 +117,7 @@ async function drawProductList() {
     mainImgEl.setAttribute("src", product.mainImgUrl);
 
     titleEl.textContent = product.title;
-    mainImgEl.textContent = product.mainImgUrl;
+
 
     // 게시물(이미지) 클릭 시 세부 목록으로
     mainImgEl.addEventListener('click', e => {
@@ -135,26 +136,35 @@ async function drawProductList() {
 // 상품 상세 정보 그리기
 async function drawProductDetail(productId) {
   // 1.
-  // data
-  // const res = await api.get(`/products/${productId}`)
+
   const frag = document.importNode(templates.productDetail, true)
   // 2.
   const titleEl = frag.querySelector('.title')
-  const detailImgEl = frag.querySelector('.detail-img')
-  detailImgEl.setAttribute('src', detailImgUrls)
+  const mainImgEl = frag.querySelector('.main-img')
+  const detailImgListEl = frag.querySelector('.detail-img-list')
   const categoryEl = frag.querySelector('.category')
   const descriptionEl = frag.querySelector('.description')
   const backEl = frag.querySelector('.back')
 
   // 3.
-  const {data: {title, category, description, detailImgUrls}} = await api.get('/products/' + productId)
+  const {data: {title, category, description, mainImgUrl, detailImgUrls}} = await api.get('/products/' + productId)
 
   // 4.
-  detailImgEl.textContent = detailImgUrls
+
+  mainImgEl.setAttribute('src', mainImgUrl)
   titleEl.textContent = title
   categoryEl.textContent = category
   descriptionEl.textContent = description
+  // 세부이미지 표시를 위한 for문
+  for (const url of detailImgUrls) {
+    const frag = document.importNode(templates.productDetailImg, true)
 
+    const detailImgEl = frag.querySelector('.detail-img')
+
+    detailImgEl.setAttribute('src', url)
+    detailImgListEl.appendChild(frag)
+
+  }
   // 5.
   backEl.addEventListener('click', e => {
     mainPage()
